@@ -1,6 +1,29 @@
-function EditProductForm() {
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+function EditProductForm({product}) {
+  const navigate = useNavigate();
+  const [name, setName] = useState(product.name);
+  const [image, setImage] = useState(product.image);
+  const [price, setPrice] = useState(product.price);
+  const [description, setDescription] = useState(product.description);
+
+
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    await axios.put(`http://localhost:4001/products/${product.id}`, {
+      name: name,
+      image: image,
+      price: price,
+      description: description,
+    });
+    navigate("/");
+  }
+
   return (
-    <form className="product-form">
+    <form className="product-form" onSubmit={handleSubmit}>
       <h1>Edit Product Form</h1>
       <div className="input-container">
         <label>
@@ -10,7 +33,7 @@ function EditProductForm() {
             name="name"
             type="text"
             placeholder="Enter name here"
-            onChange={() => {}}
+            onChange={(e) => setName(e.target.value)}
           />
         </label>
       </div>
@@ -22,7 +45,7 @@ function EditProductForm() {
             name="image"
             type="text"
             placeholder="Enter image url here"
-            onChange={() => {}}
+            onChange={(e) => setImage(e.target.value)}
           />
         </label>
       </div>
@@ -34,7 +57,7 @@ function EditProductForm() {
             name="price"
             type="number"
             placeholder="Enter price here"
-            onChange={() => {}}
+            onChange={(e) => setPrice(e.target.value)}
           />
         </label>
       </div>
@@ -46,7 +69,7 @@ function EditProductForm() {
             name="description"
             type="text"
             placeholder="Enter description here"
-            onChange={() => {}}
+            onChange={(e) => setDescription(e.target.value)}
             rows={4}
             cols={30}
           />
