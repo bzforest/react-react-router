@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
+
 function ViewProductPage() {
+  const navivate = useNavigate();
   return (
     <div>
       <h1>View Product Page</h1>
@@ -6,7 +9,7 @@ function ViewProductPage() {
         <h2>Product Title</h2>
         <p>Content</p>
       </div>
-      <button>Back to Home</button>
+      <button onClick={() => navivate("/")}>Back to Home</button>
     </div>
   );
 }
