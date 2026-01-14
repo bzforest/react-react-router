@@ -1,13 +1,25 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
 
 function CreateProductForm() {
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState("");
   const navigate = useNavigate();
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    let response = await axios.post("http://localhost:4001/products", {
+      name,
+      image,
+      price: Number(price),
+      description,
+    });
     navigate("/");
   };
   return (
-    <form className="product-form">
+    <form className="product-form" onSubmit={handleSubmit}>
       <h1>Create Product Form</h1>
       <div className="input-container">
         <label>
@@ -17,7 +29,8 @@ function CreateProductForm() {
             name="name"
             type="text"
             placeholder="Enter name here"
-            onChange={() => {}}
+            value={name}
+            onChange={(event) => setName(event.target.value)}
           />
         </label>
       </div>
@@ -29,7 +42,8 @@ function CreateProductForm() {
             name="image"
             type="text"
             placeholder="Enter image url here"
-            onChange={() => {}}
+            value={image}
+            onChange={(event) => setImage(event.target.value)}
           />
         </label>
       </div>
@@ -41,7 +55,8 @@ function CreateProductForm() {
             name="price"
             type="number"
             placeholder="Enter price here"
-            onChange={() => {}}
+            value={price}
+            onChange={(event) => setPrice(event.target.value)}
           />
         </label>
       </div>
@@ -53,16 +68,15 @@ function CreateProductForm() {
             name="description"
             type="text"
             placeholder="Enter description here"
-            onChange={() => {}}
+            value={description}
+            onChange={(event) => setDescription(event.target.value)}
             rows={4}
             cols={30}
           />
         </label>
       </div>
       <div className="form-actions">
-        <button type="submit" onClick={handleSubmit}>
-          Create
-        </button>
+        <button type="submit">Create</button>
       </div>
     </form>
   );
