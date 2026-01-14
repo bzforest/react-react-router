@@ -1,4 +1,11 @@
+import { useNavigate } from "react-router-dom";
+
 function EditProductForm() {
+  const navigate = useNavigate();
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    navigate("/");
+  };
   return (
     <form className="product-form">
       <h1>Edit Product Form</h1>
@@ -53,7 +60,9 @@ function EditProductForm() {
         </label>
       </div>
       <div className="form-actions">
-        <button type="submit">Update</button>
+        <button type="submit" onClick={handleSubmit}>
+          Update
+        </button>
       </div>
     </form>
   );

@@ -21,6 +21,10 @@ body {
   background-color: var(--muted-color-100);
 }
 
+a {
+  text-decoration: none;
+}
+
 .app-wrapper {
   display: flex;
   justify-content: space-between;
