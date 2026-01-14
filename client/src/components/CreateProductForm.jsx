@@ -1,6 +1,31 @@
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+
 function CreateProductForm() {
+
+  const [name , setName] = useState("");
+  const [imgSrc , setImgSrc] = useState("");
+  const [price , setPrice] = useState("");
+  const [description , setDescription] = useState("")
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+     await axios.post(`http://localhost:4001/products`, 
+      {
+        "name": name,
+        "price": price,
+        "image": imgSrc,
+        "description": description
+      }
+    )
+    navigate("/")
+  }
+
   return (
-    <form className="product-form">
+    <form className="product-form" onSubmit={handleSubmit}>
       <h1>Create Product Form</h1>
       <div className="input-container">
         <label>
@@ -10,7 +35,8 @@ function CreateProductForm() {
             name="name"
             type="text"
             placeholder="Enter name here"
-            onChange={() => {}}
+            onChange={(event) => {setName(event.target.value)}}
+            value={name}
           />
         </label>
       </div>
@@ -22,7 +48,8 @@ function CreateProductForm() {
             name="image"
             type="text"
             placeholder="Enter image url here"
-            onChange={() => {}}
+            onChange={(event) => {setImgSrc(event.target.value)}}
+            value={imgSrc}
           />
         </label>
       </div>
@@ -34,7 +61,8 @@ function CreateProductForm() {
             name="price"
             type="number"
             placeholder="Enter price here"
-            onChange={() => {}}
+            onChange={(event) => {setPrice(event.target.value)}}
+            value={price}
           />
         </label>
       </div>
@@ -46,14 +74,15 @@ function CreateProductForm() {
             name="description"
             type="text"
             placeholder="Enter description here"
-            onChange={() => {}}
+            onChange={(event) => {setDescription(event.target.value)}}
             rows={4}
             cols={30}
+            value={description}
           />
         </label>
       </div>
       <div className="form-actions">
-        <button type="submit">Create</button>
+        <button type="submit" >Create</button>
       </div>
     </form>
   );
